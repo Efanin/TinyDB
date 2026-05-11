@@ -11,9 +11,7 @@ def store_value(tag, value):
 
     response = requests.post(
         url,
-        data=data,
-        headers={'Content-Type': 'application/x-www-form-urlencoded'},
-        timeout=10
+        data=data
     )
     print("отправлено")
         
