@@ -1,0 +1,61 @@
+import requests
+import re
+import ast
+
+
+def store_value(tag, value):
+    url = 'http://tinywebdb.appinventor.mit.edu/storeavalue'
+    data = {
+        'tag': tag,
+        'value': value,
+        'fmt': 'html'
+    }
+    
+
+    response = requests.post(
+        url,
+        data=data
+    )
+
+def get_value(tag):
+    url = 'http://tinywebdb.appinventor.mit.edu/getvalue'
+    
+    data = {
+        'tag': tag, 
+        'fmt': 'html'
+        }
+    
+
+    response = requests.post(
+        url,
+        data=data
+    )
+    
+    response.encoding = 'utf-8'
+    text = response.text
+    
+
+
+    match = re.search(r'\[.*\]', text) 
+    value = ast.literal_eval(match.group())
+    return value[2]
+
+name = input("ваше имя: ")
+friend = input("друга имя: ")
+channel = ""
+if name>friend:
+    channel = name+friend
+else:
+    channel = friend+name
+print(channel)
+while True:
+    mes = input("-> ")
+    if mes !="":
+        mes = name + ": " + mes
+        text = get_value(channel)
+        print(text)
+        print(mes)
+        store_value(channel,text + "\n" + mes)
+    else:
+        text = get_value(channel)
+        print(text)
