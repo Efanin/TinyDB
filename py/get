@@ -5,7 +5,10 @@ import ast
 def get_value(tag):
     url = 'http://tinywebdb.appinventor.mit.edu/getvalue'
     
-    data = {'tag': tag, 'fmt': 'html'}
+    data = {
+        'tag': tag, 
+        'fmt': 'html'
+        }
     
 
     response = requests.post(
@@ -19,8 +22,7 @@ def get_value(tag):
 
 
     match = re.search(r'\[.*\]', text) 
-    arr = ast.literal_eval(match.group())
-    value = arr[2]  
-    return match
+    value = ast.literal_eval(match.group())
+    return value[2]
 
 get_value("gg")
