@@ -1,0 +1,26 @@
+import requests
+import re
+import ast
+
+def get_value(tag):
+    url = 'http://tinywebdb.appinventor.mit.edu/getvalue'
+    
+    data = {'tag': tag, 'fmt': 'html'}
+    
+
+    response = requests.post(
+        url,
+        data=data
+    )
+    
+    response.encoding = 'utf-8'
+    text = response.text
+    
+
+
+    match = re.search(r'\[.*\]', text) 
+    arr = ast.literal_eval(match.group())
+    value = arr[2]  
+    return match
+
+get_value("gg")
