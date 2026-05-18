@@ -1,0 +1,13 @@
+async def send(name, text):
+    url = "http://tinywebdb.appinventor.mit.edu/storeavalue"
+    set = new URLSearchParams()
+    set.append("tag", name)
+    set.append("value", text)
+    set.append("fmt", "html")
+    resp = await fetch(url, {method: "POST", body: set.toString()})
+    answer = await resp.text()
+    return answer
+name = input()
+mes = input()
+data = send(name, mes)
+print(data)
