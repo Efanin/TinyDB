@@ -1,3 +1,16 @@
+async def getvalue(name):
+    url = "http://tinywebdb.appinventor.mit.edu/getvalue"
+    set = new URLSearchParams()
+    set.append("tag", name)
+    
+    set.append("fmt", "html")
+    resp = await fetch(url, {method: "POST", body: set.toString()})
+    answer = await resp.text()
+    match = answer.match(/\["VALUE","[^"]*","([^"]*)"\]/) 
+    answer = match[1]
+    return answer
+
+
 async def send(name, text):
     url = "http://tinywebdb.appinventor.mit.edu/storeavalue"
     set = new URLSearchParams()
@@ -7,7 +20,17 @@ async def send(name, text):
     resp = await fetch(url, {method: "POST", body: set.toString()})
     answer = await resp.text()
     return answer
-name = input()
-mes = input()
-data = send(name, mes)
-print(data)
+
+async def main():
+    change = input("1. отправить 2. получить")
+    if change == "2":
+        name = input()
+        sms = await getvalue(name)
+        print(sms)
+    else:
+        name = input()
+        sms = input()
+        await send(name,sms)
+        print("отправлено")
+    
+main()
