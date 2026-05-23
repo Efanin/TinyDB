@@ -20,15 +20,19 @@ async def send(tag, text):
     return resp
     
 async def main():
-    choice = input("1.отправить 2.получить")
-    if choice == "1":
-        name = input("кому")
-        mes =  input("сообщение")
-        send(name,mes)
-        print("отправлено")
+    name = input("ваше имя")
+    friend = input("имя друга")
+    chat = ""
+    if name > friend:
+        chat = name + friend
     else:
-        name = input("от кого")
-        mes = await getmes(name)
+        chat = friend + name
+    while true:
+        text = await getmes(chat)
+        mes = input("сообщение")
+        if mes != "":
+            mes = name + ": " + mes
+            send(chat,text + "</br>" + mes)
+        print(text)
         print(mes)
-        
 main()
