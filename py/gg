@@ -1,36 +1,34 @@
-async def getvalue(name):
+async def getmes(tag):
     url = "http://tinywebdb.appinventor.mit.edu/getvalue"
     set = new URLSearchParams()
-    set.append("tag", name)
-    
+    set.append("tag", tag)
+
     set.append("fmt", "html")
-    resp = await fetch(url, {method: "POST", body: set.toString()})
-    answer = await resp.text()
-    match = answer.match(/\["VALUE","[^"]*","([^"]*)"\]/) 
-    answer = match[1]
-    return answer
+    resp = await fetch(url,{method: "POST", body: set.toString()})
+    text = await resp.text()
+    match = text.match(/\["VALUE","[^"]*","([^"]*)"\]/)
+    mes = match[1]
+    return mes 
 
-
-async def send(name, text):
+async def send(tag, text):
     url = "http://tinywebdb.appinventor.mit.edu/storeavalue"
     set = new URLSearchParams()
-    set.append("tag", name)
+    set.append("tag", tag)
     set.append("value", text)
     set.append("fmt", "html")
-    resp = await fetch(url, {method: "POST", body: set.toString()})
-    answer = await resp.text()
-    return answer
-
-async def main():
-    change = input("1. отправить 2. получить")
-    if change == "2":
-        name = input()
-        sms = await getvalue(name)
-        print(sms)
-    else:
-        name = input()
-        sms = input()
-        await send(name,sms)
-        print("отправлено")
+    resp = await fetch(url,{method: "POST", body: set.toString()})
+    return resp
     
+async def main():
+    choice = input("1.отправить 2.получить")
+    if choice == "1":
+        name = input("кому")
+        mes =  input("сообщение")
+        send(name,mes)
+        print("отправлено")
+    else:
+        name = input("от кого")
+        mes = await getmes(name)
+        print(mes)
+        
 main()
