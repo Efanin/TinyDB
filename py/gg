@@ -19,20 +19,4 @@ async def send(tag, text):
     resp = await fetch(url,{method: "POST", body: set.toString()})
     return resp
     
-async def main():
-    name = input("ваше имя")
-    friend = input("имя друга")
-    chat = ""
-    if name > friend:
-        chat = name + friend
-    else:
-        chat = friend + name
-    while true:
-        text = await getmes(chat)
-        mes = input("сообщение")
-        if mes != "":
-            mes = name + ": " + mes
-            send(chat,text + "</br>" + mes)
-        print(text)
-        print(mes)
-main()
+
