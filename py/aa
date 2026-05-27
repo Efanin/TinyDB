@@ -1,0 +1,23 @@
+/*
+url = "https://ru.wikipedia.org/wiki/"
+tag = "<iframe "
+title = "title = 'site'></iframe>"
+search = input()
+res = tag+"src="+url+search+" width='300' height='400'"+title
+print(res)
+*/
+
+async def main():
+    url = "https://ru.wikipedia.org/w/api.php?action=query&list=search&srsearch="
+    search = input()
+    title = "&format=json&origin=*"
+    resp = await fetch(url+search+title)
+    res = await resp.json()
+    print(res)
+    
+main()
+    
+    
+    
+    
+    
